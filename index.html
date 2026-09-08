@@ -1,82 +1,634 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name — Researcher</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yay Chann</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1410;
+      --paper: #f5f0e8;
+      --warm: #c8964a;
+      --accent: #8b3a3a;
+      --muted: #7a7065;
+      --light: #ede8de;
+      --border: #d4cfc4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(245,240,232,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--ink); transition: 0.3s; }
+
+    /* ─── HERO ─── */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 60px;
+    }
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 4rem 5rem 6rem;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 2rem;
+      color: var(--ink);
+    }
+    .hero-name em { color: var(--accent); font-style: normal; }
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.75rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--ink); color: var(--paper); }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-outline { border: 1px solid var(--ink); color: var(--ink); }
+    .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+    .hero-visual {
+      background: var(--light);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 30px,
+        rgba(200,150,74,0.04) 30px,
+        rgba(200,150,74,0.04) 31px
+      );
+    }
+    .hero-monogram {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 14vw, 16rem);
+      font-weight: 700;
+      color: rgba(139,58,58,0.08);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      user-select: none;
+      position: relative; z-index: 1;
+    }
+    .hero-tag {
+      position: absolute; bottom: 3rem; left: 3rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    section { padding: 6rem 0; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section-header { margin-bottom: 3.5rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--ink); color: var(--paper); }
+    #about .section-label { color: var(--warm); }
+    #about .section-title { color: var(--paper); }
+    .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 5rem; align-items: start; }
+    .about-text p { color: rgba(245,240,232,0.78); line-height: 1.9; margin-bottom: 1.2rem; }
+    .about-text a { color: var(--warm); text-decoration: none; }
+    .about-text a:hover { text-decoration: underline; }
+    .about-sidebar {}
+    .sidebar-block { margin-bottom: 2.5rem; }
+    .sidebar-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.4);
+      margin-bottom: 0.75rem;
+    }
+    .sidebar-value { color: rgba(245,240,232,0.85); font-size: 0.9rem; line-height: 1.7; }
+    .sidebar-value a { color: var(--warm); text-decoration: none; }
+
+    /* ─── RESEARCH ─── */
+    #research { background: var(--paper); }
+    .research-section { margin-bottom: 3.5rem; }
+    .research-section-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .pub-card {
+      display: flex; gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      transition: all 0.2s;
+    }
+    .pub-card:hover { padding-left: 0.5rem; }
+    .pub-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--warm);
+      min-width: 2rem;
+      padding-top: 0.2rem;
+    }
+    .pub-content {}
+    .pub-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+    .pub-card:hover .pub-title { color: var(--accent); }
+    .pub-authors {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .pub-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* ─── BLOG & ESSAYS ─── */
+    #blog-essays { background: var(--light); }
+    .section-tabs { display: flex; gap: 0; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+    .tab-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.5rem;
+      border: none; background: none; cursor: pointer;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+    }
+    .tab-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .placeholder-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 1rem;
+    }
+    .placeholder-card p { color: var(--muted); font-size: 0.9rem; }
+    .placeholder-card .placeholder-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--paper); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .contact-text {}
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: var(--warm);
+      flex-shrink: 0;
+    }
+    .contact-detail { font-size: 0.9rem; color: var(--muted); }
+    .contact-detail strong { display: block; color: var(--ink); font-size: 0.78rem; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .contact-detail a { color: var(--ink); text-decoration: none; }
+    .contact-detail a:hover { color: var(--accent); }
+    .contact-visual {
+      background: var(--light);
+      padding: 3rem;
+      border: 1px solid var(--border);
+    }
+    .contact-visual p { font-size: 1.3rem; font-family: 'Playfair Display', serif; color: var(--ink); line-height: 1.5; margin-bottom: 1rem; }
+    .contact-visual span { font-size: 0.85rem; color: var(--muted); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--ink);
+      color: rgba(245,240,232,0.45);
+      padding: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer p { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    footer a { color: var(--warm); text-decoration: none; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-name    { animation: fadeUp 0.6s 0.1s ease both; }
+    .hero-bio     { animation: fadeUp 0.6s 0.2s ease both; }
+    .hero-links   { animation: fadeUp 0.6s 0.3s ease both; }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      #home { grid-template-columns: 1fr; }
+      .hero-text { padding: 3rem 1.5rem; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--paper); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; gap: 1.2rem; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+    }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="wrap">
-    <span class="brand">Your Name</span>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#publications">Publications</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-brand">Yay Chann</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#blog-essays">Blog & Essays</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
   </div>
-</header>
+</nav>
 
-<section id="about" class="hero">
-  <div class="wrap">
-    <h1>Your Name</h1>
-    <p class="tagline">Public policy researcher — Multiple Streams Framework · Myanmar policy studies</p>
-    <p>
-      Short bio goes here. A sentence or two about your academic background,
-      current affiliation, and what you research. Keep it to 3–4 sentences.
+<!-- HERO -->
+<section id="home">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Policy Researcher · Chiang Mai</p>
+    <h1 class="hero-name">Yay<br/><em>Chann</em></h1>
+    <p class="hero-bio">
+      Policy researcher and advocate specialising in urban governance, local institutions, and public policy in Myanmar. Currently pursuing a PhD at Chiang Mai University School of Public Policy.
     </p>
+    <div class="hero-links">
+      <a href="#research" class="btn btn-primary">View Research</a>
+      <a href="https://drive.google.com/file/d/1ojldmVMosODAYOgsrEKz3R0L86GzcvLx/view?usp=sharing" target="_blank" class="btn btn-outline">Download CV</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-monogram">YC</div>
+    <span class="hero-tag">Policy · Urban · Governance</span>
   </div>
 </section>
 
-<section id="research" class="section">
-  <div class="wrap">
-    <h2>Research Interests</h2>
-    <ul class="tag-list">
-      <li>Multiple Streams Framework</li>
-      <li>Public Policy in Myanmar</li>
-      <li>Political Institutions</li>
-      <li>Policy Diffusion</li>
-    </ul>
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Profile</p>
+      <h2 class="section-title">About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          <a href="https://www.linkedin.com/in/yay-chann-a39a76128/" target="_blank">Yay Chann</a> is a policy researcher and devoted policy advocate, who worked as a senior policy analyst at <a href="https://www.anotherdevelopment.org/" target="_blank">Another Development (AD)</a>, a local policy think tank, and also worked as a research assistant at <a href="https://spp.cmu.ac.th/" target="_blank">Chiang Mai University School of Public Policy</a>, Thailand and Forest Research Institute, Nay Pyi Taw, Myanmar.
+        </p>
+        <p>
+          He has experience in policy analysis, urban, and local governance research and advocacy. As a policy researcher, he contributed three policy papers for his organisation — AD, <a href="http://www.eai.or.kr/main/english/publication_01_view.asp?intSeq=10289&board=eng_report&keyword_option=&keyword=&more=" target="_blank">one working paper</a> for East Asia Institute in Seoul, Korea, and <a href="https://spp.cmu.ac.th/category/policy-briefs/" target="_blank">three policy briefs</a> for Chiang Mai University School of Public Policy, Thailand.
+        </p>
+        <p>
+          His opinion pieces can also be found at <a href="https://teacircleoxford.com/" target="_blank">Tea Circle Oxford</a> and <a href="https://www.mmtimes.com/news/concreting-over-yangon.html" target="_blank">The Myanmar Times</a>. <a href="https://commsconsult.cmail20.com/t/ViewEmail/r/7F933731D40772742540EF23F30FEDED/2A3A11350001B3368BD4C707EBCCB890?fbclid=IwAR0ArLGwkikZLoQCvD3XcJHxVD4Vylaw7nODwmAvqKGjN_dZTASOxbIvC0s" target="_blank">More than 15 media outlets</a> including the <a href="https://www.weforum.org/agenda/2020/01/myanmar-public-space/" target="_blank">World Economic Forum</a> covered his research findings on green spaces in Yangon; his work was also discussed at a public debate hosted by <a href="https://www.ispmyanmar.com/" target="_blank">the Institute for Strategy and Policy</a>, Myanmar.
+        </p>
+        <p>
+          He studied Research Studies at Yangon University of Economics, and holds an M.A. in Public Policy at Chiang Mai University School of Public Policy. He is currently completing his PhD at the school.
+        </p>
+      </div>
+      <div class="about-sidebar">
+        <div class="sidebar-block">
+          <p class="sidebar-label">Education</p>
+          <p class="sidebar-value">PhD Candidate, Public Policy<br/>Chiang Mai University</p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Previous</p>
+          <p class="sidebar-value">M.A. Public Policy<br/>Chiang Mai University<br/><br/>B.A. Research Studies<br/>Yangon University of Economics</p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Affiliations</p>
+          <p class="sidebar-value">
+            <a href="https://www.anotherdevelopment.org/" target="_blank">Another Development (AD)</a><br/>
+            <a href="https://spp.cmu.ac.th/" target="_blank">CMU School of Public Policy</a>
+          </p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-label">Twitter / X</p>
+          <p class="sidebar-value"><a href="https://twitter.com/yaychann_" target="_blank">@yaychann_</a></p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<section id="publications" class="section alt">
-  <div class="wrap">
-    <h2>Publications &amp; Bibliographies</h2>
-    <ul class="pub-list">
-      <li>
-        <strong>Multiple Streams Framework (Kingdon) — Annotated Bibliography</strong>
-        <span class="pub-meta">219 sources, categorized</span>
-      </li>
-      <li>
-        <strong>Public Policy in Myanmar — Annotated Bibliography</strong>
-        <span class="pub-meta">402 sources across 6 policy sectors</span>
-      </li>
-      <li class="pub-placeholder">Add your papers, working drafts, or conference presentations here.</li>
-    </ul>
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Publications</p>
+      <h2 class="section-title">Research</h2>
+    </div>
+
+    <div class="research-section">
+      <p class="research-section-title">Peer-Reviewed Articles</p>
+
+      <a href="https://www.tandfonline.com/doi/full/10.1080/17516234.2024.2403042?af=R" target="_blank" class="pub-card">
+        <span class="pub-num">01</span>
+        <div class="pub-content">
+          <p class="pub-title">Civil society organizations as policy entrepreneurs: the practices of problem definition in the case of Myitsone Dam suspension of Myanmar</p>
+          <p class="pub-authors">Yay Chann &amp; Pobsook Chamchong</p>
+          <span class="pub-tag">Journal Article · 2024</span>
+        </div>
+      </a>
+
+      <a href="https://so05.tci-thaijo.org/index.php/pajournal/article/view/270717" target="_blank" class="pub-card">
+        <span class="pub-num">02</span>
+        <div class="pub-content">
+          <p class="pub-title">Overcoming Yangon's Sustainability Challenge: Policy Options for Sustainable Water Governance</p>
+          <p class="pub-authors">Yay Chann</p>
+          <span class="pub-tag">Journal Article</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="research-section">
+      <p class="research-section-title">Book Chapters</p>
+
+      <a href="https://www.elgaronline.com/edcollchap/book/9781035319602/chapter10.xml" target="_blank" class="pub-card">
+        <span class="pub-num">03</span>
+        <div class="pub-content">
+          <p class="pub-title">Crafting Innovative Policy Design: Practices from Policy Labs in Asia</p>
+          <p class="pub-authors">Yay Chann · In: Poocharoen, Boossabong &amp; Chamchong (eds.), Edward Elgar Publishing, 2025</p>
+          <span class="pub-tag">Book Chapter · 2025</span>
+        </div>
+      </a>
+
+      <a href="https://www.elgaronline.com/edcollchap/book/9781035319602/chapter31.xml" target="_blank" class="pub-card">
+        <span class="pub-num">04</span>
+        <div class="pub-content">
+          <p class="pub-title">Public Policy in Nepal: The Transition Towards Empowerment and Participatory Governance</p>
+          <p class="pub-authors">Yay Chann · In: Poocharoen, Boossabong &amp; Chamchong (eds.), Edward Elgar Publishing, 2025</p>
+          <span class="pub-tag">Book Chapter · 2025</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="research-section">
+      <p class="research-section-title">Policy Papers &amp; Working Papers</p>
+
+      <a href="https://spp.cmu.ac.th/summer-fellowship-program-2021-survival-governance-applying-evidence-from-the-yellow-flag-community-based-response-to-the-covid-emergency-in-myanmars-urban-areas-for-futur/" target="_blank" class="pub-card">
+        <span class="pub-num">05</span>
+        <div class="pub-content">
+          <p class="pub-title">Survival Governance: Applying Evidence from the "Yellow Flag" Community-Based Response to the COVID Emergency in Myanmar's Urban Areas</p>
+          <p class="pub-authors">Yay Chann · CMU School of Public Policy</p>
+          <span class="pub-tag">Policy Brief</span>
+        </div>
+      </a>
+
+      <a href="https://spp.cmu.ac.th/summer-fellowship-program-2021-local-governance-and-democratic-institution-building-in-myanmar-elected-township-government/" target="_blank" class="pub-card">
+        <span class="pub-num">06</span>
+        <div class="pub-content">
+          <p class="pub-title">Local Governance and Democratic Institution-Building in Myanmar: Elected Township Government</p>
+          <p class="pub-authors">Yay Chann · CMU School of Public Policy</p>
+          <span class="pub-tag">Policy Brief</span>
+        </div>
+      </a>
+
+      <a href="https://idl-bnc-idrc.dspacedirect.org/handle/10625/60775" target="_blank" class="pub-card">
+        <span class="pub-num">07</span>
+        <div class="pub-content">
+          <p class="pub-title">Engaging the Public in Tanintharyi Region: Policy Options for Better Engagement</p>
+          <p class="pub-authors">Yay Chann · Another Development (AD)</p>
+          <span class="pub-tag">Policy Paper</span>
+        </div>
+      </a>
+
+      <a href="http://www.eai.or.kr/main/english/publication_01_view.asp?intSeq=10289&board=eng_report&keyword_option=&keyword=&more=" target="_blank" class="pub-card">
+        <span class="pub-num">08</span>
+        <div class="pub-content">
+          <p class="pub-title">Parks in Yangon: Accessible Public Parks for All</p>
+          <p class="pub-authors">Yay Chann · East Asia Institute, Seoul</p>
+          <span class="pub-tag">Working Paper</span>
+        </div>
+      </a>
+
+      <a href="https://themimu.info/sites/themimu.info/files/documents/Report_Green_Space_in_Yangon_Towards_Greener_City_for_All_ENG.pdf" target="_blank" class="pub-card">
+        <span class="pub-num">09</span>
+        <div class="pub-content">
+          <p class="pub-title">Green Spaces in Yangon: Towards a Greener City for All</p>
+          <p class="pub-authors">Yay Chann · Another Development (AD)</p>
+          <span class="pub-tag">Policy Report</span>
+        </div>
+      </a>
+
+      <a href="http://www.eai.or.kr/main/english/publication_01_view.asp?intSeq=9935&board=eng_report&keyword_option=&keyword=&more=" target="_blank" class="pub-card">
+        <span class="pub-num">10</span>
+        <div class="pub-content">
+          <p class="pub-title">Access to Clean and Safe Water in Yangon: A Case of Municipal Water Provision in Insein Township</p>
+          <p class="pub-authors">Yay Chann · East Asia Institute, Seoul</p>
+          <span class="pub-tag">Working Paper</span>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 
-<section id="contact" class="section">
-  <div class="wrap">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
-    <p>
-      <a href="https://github.com/yourusername" target="_blank" rel="noopener">GitHub</a> ·
-      <a href="#" target="_blank" rel="noopener">Google Scholar</a> ·
-      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-    </p>
+<!-- BLOG & ESSAYS -->
+<section id="blog-essays">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Writing</p>
+      <h2 class="section-title">Blog &amp; Essays</h2>
+    </div>
+    <div class="section-tabs">
+      <button class="tab-btn active" onclick="switchTab('blog', this)">Blog</button>
+      <button class="tab-btn" onclick="switchTab('essays', this)">Essays</button>
+    </div>
+    <div id="tab-blog" class="tab-content active">
+      <div class="placeholder-card">
+        <p class="placeholder-title">Opinion pieces &amp; commentary</p>
+        <p>Blog posts and commentary can be found at <a href="https://teacircleoxford.com/" target="_blank" style="color:var(--accent)">Tea Circle Oxford</a> and <a href="https://www.mmtimes.com/news/concreting-over-yangon.html" target="_blank" style="color:var(--accent)">The Myanmar Times</a>. Updates forthcoming here.</p>
+      </div>
+    </div>
+    <div id="tab-essays" class="tab-content">
+      <div class="placeholder-card">
+        <p class="placeholder-title">Academic essays &amp; long-form writing</p>
+        <p>Essays and longer academic writings will be listed here. Check back for updates.</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <p>&copy; 2026 Your Name. Built with GitHub Pages.</p>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Get in Touch</p>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-text">
+        <div class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div class="contact-detail">
+            <strong>Email</strong>
+            <a href="mailto:yaychann_y@cmu.ac.th">yaychann_y@cmu.ac.th</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">𝕏</div>
+          <div class="contact-detail">
+            <strong>Twitter / X</strong>
+            <a href="https://twitter.com/yaychann_" target="_blank">@yaychann_</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">in</div>
+          <div class="contact-detail">
+            <strong>LinkedIn</strong>
+            <a href="https://www.linkedin.com/in/yay-chann-a39a76128/" target="_blank">Yay Chann</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📄</div>
+          <div class="contact-detail">
+            <strong>Curriculum Vitae</strong>
+            <a href="https://drive.google.com/file/d/1ojldmVMosODAYOgsrEKz3R0L86GzcvLx/view?usp=sharing" target="_blank">Download CV (PDF)</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-visual">
+        <span>Based in Chiang Mai, Thailand</span>
+      </div>
+    </div>
   </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 Yay Chann · Policy Researcher</p>
+  <p><a href="https://twitter.com/yaychann_" target="_blank">@yaychann_</a> · <a href="mailto:yaychann_y@cmu.ac.th">yaychann_y@cmu.ac.th</a></p>
 </footer>
 
+<script>
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+</script>
 </body>
 </html>
+

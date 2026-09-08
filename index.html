@@ -9,13 +9,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink: #1a1410;
-      --paper: #f5f0e8;
+      --ink: #f0ece2;
+      --paper: #0a0908;
       --warm: #c8964a;
-      --accent: #8b3a3a;
-      --muted: #7a7065;
-      --light: #ede8de;
-      --border: #d4cfc4;
+      --accent: #c1665c;
+      --muted: #a89e92;
+      --light: #141311;
+      --border: #2c2822;
     }
 
     html { scroll-behavior: smooth; }
@@ -31,7 +31,7 @@
     /* ─── NAV ─── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(245,240,232,0.95);
+      background: rgba(10,9,8,0.92);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
@@ -134,7 +134,7 @@
       font-family: 'Playfair Display', serif;
       font-size: clamp(8rem, 14vw, 16rem);
       font-weight: 700;
-      color: rgba(139,58,58,0.08);
+      color: rgba(200,150,74,0.10);
       letter-spacing: -0.05em;
       line-height: 1;
       user-select: none;
@@ -177,9 +177,8 @@
     }
 
     /* ─── ABOUT ─── */
-    #about { background: var(--ink); color: var(--paper); }
+    #about { background: #050403; color: var(--ink); }
     #about .section-label { color: var(--warm); }
-    #about .section-title { color: var(--paper); }
     .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 5rem; align-items: start; }
     .about-text p { color: rgba(245,240,232,0.78); line-height: 1.9; margin-bottom: 1.2rem; }
     .about-text a { color: var(--warm); text-decoration: none; }
@@ -312,7 +311,7 @@
 
     /* ─── FOOTER ─── */
     footer {
-      background: var(--ink);
+      background: #050403;
       color: rgba(245,240,232,0.45);
       padding: 2rem;
       display: flex; justify-content: space-between; align-items: center;

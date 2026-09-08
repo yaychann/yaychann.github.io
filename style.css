@@ -55,94 +55,25 @@ nav {
 .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
 .hamburger span { width: 24px; height: 2px; background: var(--ink); transition: 0.3s; }
 
-/* ─── HERO (home page) ─── */
-#home {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding-top: 60px;
-}
-.hero-text {
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 5rem 4rem 5rem 6rem;
-}
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--warm);
+/* ─── PROFILE (home page) ─── */
+.profile-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
   margin-bottom: 1.5rem;
 }
-.hero-name {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 5vw, 5.5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  margin-bottom: 2rem;
-  color: var(--ink);
+.profile-photo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.25rem;
 }
-.hero-name em { color: var(--accent); font-style: normal; }
-.hero-bio {
-  font-size: 1rem;
-  color: var(--muted);
-  max-width: 480px;
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
-}
-.hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn {
-  display: inline-block;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.75rem 1.75rem;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-.btn-primary { background: var(--ink); color: var(--paper); }
-.btn-primary:hover { background: var(--accent); }
-.btn-outline { border: 1px solid var(--ink); color: var(--ink); }
-.btn-outline:hover { background: var(--ink); color: var(--paper); }
-
-.hero-visual {
-  background: var(--light);
-  display: flex; align-items: center; justify-content: center;
-  position: relative; overflow: hidden;
-}
-.hero-visual::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 30px,
-    rgba(200,150,74,0.04) 30px,
-    rgba(200,150,74,0.04) 31px
-  );
-}
-.hero-monogram {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(8rem, 14vw, 16rem);
-  font-weight: 700;
-  color: rgba(200,150,74,0.10);
-  letter-spacing: -0.05em;
-  line-height: 1;
-  user-select: none;
-  position: relative; z-index: 1;
-}
-.hero-tag {
-  position: absolute; bottom: 3rem; left: 3rem;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
+.profile-email { margin-bottom: 2.5rem; }
+.profile-email a { color: var(--warm); text-decoration: none; font-size: 0.9rem; }
+.profile-email a:hover { text-decoration: underline; }
 
 /* ─── SECTION WRAPPER (all pages) ─── */
 section { padding: 6rem 0; }
@@ -295,16 +226,11 @@ footer a { color: var(--warm); text-decoration: none; }
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.hero-eyebrow { animation: fadeUp 0.6s ease both; }
-.hero-name    { animation: fadeUp 0.6s 0.1s ease both; }
-.hero-bio     { animation: fadeUp 0.6s 0.2s ease both; }
-.hero-links   { animation: fadeUp 0.6s 0.3s ease both; }
+.profile-name { animation: fadeUp 0.6s ease both; }
+.about-text p { animation: fadeUp 0.6s 0.1s ease both; }
 
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
-  #home { grid-template-columns: 1fr; }
-  .hero-text { padding: 3rem 1.5rem; }
-  .hero-visual { display: none; }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
   .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--paper); border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; gap: 1.2rem; }
